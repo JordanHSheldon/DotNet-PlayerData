@@ -22,29 +22,19 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Restore Dependencies
-      run: |
-          cd src/EsportsProfileApi.Web
-          dotnet restore EsportsProfileWebApi.Web
+      run: dotnet restore src/EsportsProfileApi.Web/EsportsProfileWebApi.Web
 
     - name: Build
-      run: |
-          cd src/EsportsProfileApi.Web
-          dotnet build --configuration Release
+      run: dotnet build src/EsportsProfileApi.Web/EsportsProfileWebApi.Web --configuration Release
 
     - name: Run Tests
-      run: |
-          cd src/EsportsProfileApi.Web
-          dotnet test --configuration Release --no-build
+      run: dotnet test src/EsportsProfileApi.Web/EsportsProfileWebApi.Web --configuration Release --no-build
 
     - name: Check Test Results
-      run: |
-          cd src/EsportsProfileApi.Web
-          dotnet test --list-tests --configuration Release > testResults.txt
+      run: dotnet test src/EsportsProfileApi.Web/EsportsProfileWebApi.Web /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --list-tests --configuration Release > testResults.txt 
           
     - name: Display Test Results
-      run: |
-          cd src/EsportsProfileApi.Web
-          cat testResults.txt
+      run: cat testResults.txt
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v2

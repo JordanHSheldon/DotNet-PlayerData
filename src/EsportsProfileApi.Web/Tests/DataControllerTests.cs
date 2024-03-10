@@ -1,5 +1,6 @@
 ﻿namespace Tests;
 
+using EsportsProfileWebApi.CROSSCUTTING.Requests.Data;
 using EsportsProfileWebApi.CROSSCUTTING.Responses.Data;
 using EsportsProfileWebApi.Web.Controllers;
 using EsportsProfileWebApi.Web.Orchestrators;
@@ -19,7 +20,7 @@ public class DataControllerTests
     }
 
     [Test]
-    public void GetAllDataAsync_ReturnsGetDataResponse()
+    public void GetAllDataAsync_ValidRequest_ReturnsGetDataResponse()
     {
         // Arrange
         var request = new List<GetDataResponse>();
@@ -32,4 +33,35 @@ public class DataControllerTests
         Assert.IsNotNull(result);
         mockDataOrchestrator.Verify(verify => verify.GetAllDataAsync(), Times.Once);
     }
+
+    [Test]
+    public void GetUserDataByUserName_ValidRequest_ReturnsGetDataResponse()
+    {
+        // Arrange
+        var request = new GetDataRequest();
+        mockDataOrchestrator.Setup(test => test.GetUserDataByAlias(It.IsAny<GetDataRequest>())).ReturnsAsync(new GetDataResponse());
+
+        // Act
+        var result = _dataController.GetDataByUserName(request);
+
+        // Assert
+        Assert.IsNotNull(result);
+        mockDataOrchestrator.Verify(verify => verify.GetUserDataByAlias(request), Times.Once);
+    }
+    //GetDataById
+
+    //[Test]
+    //public void GetDataById_ValidRequest_ReturnsGetDataResponse()
+    //{
+    //    // Arrange
+    //    var request = new GetDataRequest();
+    //    mockDataOrchestrator.Setup(test => test.GetUserDataByAlias(It.IsAny<GetDataRequest>())).ReturnsAsync(new GetDataResponse());
+
+    //    // Act
+    //    var result = _dataController.GetDataById(request);
+
+    //    // Assert
+    //    Assert.IsNotNull(result);
+    //    mockDataOrchestrator.Verify(verify => verify.GetUserDataByAlias(request), Times.Once);
+    //}
 }

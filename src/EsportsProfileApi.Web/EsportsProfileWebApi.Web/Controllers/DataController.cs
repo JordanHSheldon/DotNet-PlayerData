@@ -19,7 +19,7 @@ public class DataController : Controller
 
     [HttpPost]
     [Route("GetDataByName")]
-    public async Task<GetDataResponse> GetDataByName(GetDataRequest getDataRequestDto)
+    public async Task<GetDataResponse> GetDataByUserName(GetDataRequest getDataRequestDto)
     {
         var result = await _dataOrchestrator.GetUserDataByAlias(getDataRequestDto);
         return result;
